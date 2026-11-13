@@ -5,7 +5,7 @@ Usage:
 Prints one line per window and ALERT/CLEAR on debounced changes. Writes m4/motor_state.json
 (read by the M5 dashboard and m4/mqtt_publisher.py) and m4_alert_log.csv.
 """
-import argparse, collections, csv, json, os, time
+import argparse, collections, csv, json, os, sys, time
 import numpy as np
 from anomaly_core import AnomalyScorer, AlertState
 from features import load_run
@@ -47,11 +47,13 @@ def rows():
                     pass
 
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from common.atomic_json import write_json_atomic
+
+
 def write_state(score, alert):
-    tmp = a.state + ".tmp"
-    with open(tmp, "w") as f:
-        json.dump({"ts": time.time(), "score": score, "threshold": sc.threshold, "alert": alert}, f)
-    os.replace(tmp, a.state)
+    # robust to the file being open in the publisher / dashboard / OneDrive (Windows locks on replace)
+    write_json_atomic(a.state, {"ts": time.time(), "score": score, "threshold": sc.threshold, "alert": alert})
 
 
 buf, since, n, t0, log = collections.deque(maxlen=sc.win), 0, 0, time.time(), []

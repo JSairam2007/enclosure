@@ -157,8 +157,11 @@ Linux: `m5/autostart/edgeai.service` (instructions in the file).
 | M5 dashboard / soak / autostart | done; power-cycle evidence in `docs/m5_autostart_test.md` |
 | M5 20-part evaluation | **pending: record 20 part clips** and fill `m5/parts_manifest.csv` |
 
-Known gap: with no part in view the verdict is PASS (rules only fail on a defect class). A `NO PART`
-state is a planned change to `m3/rules.yaml` / the dashboard.
+Station verdict: **FAIL** (5 bad frames in a row) > **NO PART** (5 frames with no detection; `no_part` in
+`m3/rules.yaml`) > **PASS**. Check any clip offline with `python m5/verdict_check.py clips/f.mp4`.
+
+Filled-in reports from the measured results are in [`docs/filled/`](docs/filled/) (data card, M1 error
+analysis, M2 results, decision-rule measurements, threat-model tests); the templates in `docs/` stay blank.
 
 Not in this repository (see `.gitignore`): videos, extracted frames, trained models, the broker password
 file and TLS keys. Re-create them with the commands above.

@@ -42,6 +42,26 @@ class Debounce:
         return None
 
 
+class Verdict:
+    """Station verdict: FAIL (debounced bad) > NO PART (N frames in a row with no detection) > PASS.
+    An empty station is not a pass: nothing was inspected. Set no_part: false in rules.yaml to disable."""
+    def __init__(self, rules):
+        self.deb = Debounce(rules["debounce_frames"])
+        self.n = rules["debounce_frames"]
+        self.no_part = rules.get("no_part", True)
+        self.empty_run = 0
+
+    def update(self, class_names, rules):
+        """returns (verdict, debounce_event) ; debounce_event is FIRE / RELEASE / None for the actuator"""
+        ev = self.deb.update(frame_is_bad(class_names, rules))
+        self.empty_run = self.empty_run + 1 if not class_names else 0
+        if self.deb.active:
+            return "FAIL", ev
+        if self.no_part and self.empty_run >= self.n:
+            return "NO PART", ev
+        return "PASS", ev
+
+
 class Actuator:
     """Arduino relay/LED over serial ('1'/'0'); with no port it is an on-screen LED only."""
     def __init__(self, port=None):

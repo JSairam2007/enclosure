@@ -14,7 +14,8 @@ from flask import Flask, Response, jsonify
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common.rules_engine import load_rules, frame_is_bad, Debounce, Actuator
+from common.rules_engine import load_rules, frame_is_bad, Verdict, Actuator
+from common.atomic_json import write_json_atomic
 import headline
 
 p = argparse.ArgumentParser()
@@ -46,10 +47,8 @@ def write_status():
         st = {k: v for k, v in S.items() if k != "jpeg"}
         st["kpi"] = kpis()
         st["ts"] = time.time()
-    tmp = a.status_file + ".tmp"
-    with open(tmp, "w") as f:
-        json.dump(st, f)
-    os.replace(tmp, a.status_file)
+    if not write_json_atomic(a.status_file, st):
+        S["status_write_failures"] = S.get("status_write_failures", 0) + 1  # file busy; next write retries
 
 
 def kpis():
@@ -61,9 +60,24 @@ def kpis():
 
 
 def worker():
+    """Keeps the camera loop alive: an unexpected error is logged, shown on the page, and the loop restarts."""
+    while True:
+        try:
+            _worker()
+            return  # clean end (end of video file)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            with lock:
+                S["verdict"], S["source_state"] = "ERROR - RESTARTING", "error"
+                S["worker_errors"] = S.get("worker_errors", 0) + 1
+            time.sleep(1)
+
+
+def _worker():
     isfile = not a.source.isdigit()
     cap = cv2.VideoCapture(a.source if isfile else int(a.source))
-    deb, last_ok, last_status = Debounce(R["debounce_frames"]), time.time(), 0
+    vstate, last_ok, last_status = Verdict(R), time.time(), 0
     while True:
         ok, fr = cap.read()
         if not ok:
@@ -89,8 +103,8 @@ def worker():
         raw = det(fr)
         ms = (time.perf_counter() - t0) * 1000
         dets = [{"cls": c, "conf": round(s, 3), "box": b} for c, s, b in raw]
-        bad = frame_is_bad([d["cls"] for d in dets], R)
-        ev = deb.update(bad)
+        verdict, ev = vstate.update([d["cls"] for d in dets], R)
+        bad = frame_is_bad([d["cls"] for d in dets], R)  # per-frame, for the FAIL-share KPI
         if ev:
             act.set(ev == "FIRE")
         for d in dets:
@@ -102,7 +116,7 @@ def worker():
         with lock:
             lat.append(ms); tstamps.append(time.time()); bads.append(1 if bad else 0)
             S.update(jpeg=jpg.tobytes() if ok2 else None, detections=dets, frames=S["frames"] + 1,
-                     verdict="FAIL" if deb.active else "PASS", source_state="ok")
+                     verdict=verdict, source_state="ok")
         if time.time() - last_status > 0.5:
             write_status(); last_status = time.time()
 
@@ -182,7 +196,7 @@ h3{margin:4px 0 8px;font-size:13px;color:var(--mut);text-transform:uppercase;let
 const $=id=>document.getElementById(id);
 function row(t,a,b){const tr=document.createElement('tr');[a,b].forEach(x=>{const td=document.createElement('td');td.textContent=x;tr.appendChild(td)});t.appendChild(tr)}
 async function tick(){try{const d=await (await fetch('/api/status')).json();
- const v=$('verdict');v.textContent=d.verdict;v.style.background=d.verdict==='PASS'?'var(--ok)':d.verdict==='FAIL'||d.verdict.startsWith('CAMERA')?'var(--bad)':'#333';
+ const v=$('verdict');v.textContent=d.verdict;v.style.background=d.verdict==='PASS'?'var(--ok)':d.verdict==='FAIL'||d.verdict.startsWith('CAMERA')?'var(--bad)':d.verdict==='NO PART'?'var(--warn)':'#333';
  $('fps').textContent=d.kpi.fps??'-';$('lat').textContent=d.kpi.latency_median_ms??'-';$('fail').textContent=d.kpi.fail_share_pct??'-';
  const m=d.motor;$('motor').textContent=m.state+(m.score!==undefined?`  score ${m.score} / thr ${m.threshold}`:'');
  $('motor').style.color=m.state==='ALERT'?'var(--bad)':m.state==='normal'?'#81c995':'var(--warn)';
