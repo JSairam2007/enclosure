@@ -8,8 +8,8 @@ runs_v1/
 *.mp4
 *.jpg
 *.png
-m4/data/
-m4/phone_raw/
+M4/data/
+M4/phone_raw/
 
 # --- models / build artefacts ---
 models/
@@ -20,24 +20,24 @@ deploy/
 pkgs/
 
 # --- secrets: broker password, TLS keys ---
-m4/mosquitto/certs/
-m4/mosquitto/passwd
-m4/mosquitto/mqtt.env
-m4/mosquitto/mosquitto.conf
+M4/mosquitto/certs/
+M4/mosquitto/passwd
+M4/mosquitto/mqtt.env
+M4/mosquitto/mosquitto.conf
 
 # --- runtime state and raw logs ---
-m4/motor_state.json
-m4/.crash_demo_count
-m5/status.json
+M4/motor_state.json
+M4/.crash_demo_count
+M5/status.json
 *.tmp
 *_log.txt
 *_out.txt
 *_err.txt
-m5_autostart.log
-m5_soak_errors.txt
-m5_soak_console.txt
-m4_mqtt_log.csv
-m4_watchdog_log.csv
+M5/results/m5_autostart.log
+M5/results/m5_soak_errors.txt
+M5/results/m5_soak_console.txt
+M4/results/m4_mqtt_log.csv
+M4/results/m4_watchdog_log.csv
 
 # --- python ---
 __pycache__/

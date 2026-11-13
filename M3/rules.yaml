@@ -1,0 +1,9 @@
+# Decision rule sheet (M3). Edit, then justify EVERY value in M3/docs/decision_rules.md.
+mode: defect_class          # defect_class | any_detection | missing_expected
+defect_classes: ["case_open", "lid"]  # open case or a loose lid = BAD (closed case = PASS)
+expected_class: "case_closed"         # used by missing_expected mode: BAD when this class is NOT seen
+confidence: 0.5             # minimum detection confidence
+no_part: true               # N frames with no detection at all -> verdict NO PART (not PASS)
+debounce_frames: 5         # N consecutive bad frames before acting (and N good to release)
+camera_timeout_s: 2.0       # no frame for this long = camera failure
+safe_state: "ON"            # fail-safe output when the camera fails (ON = relay on = stop line)

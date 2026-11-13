@@ -9,4 +9,4 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-CMD ["python", "m3/decide_act.py", "--model", "models/best_int8.onnx", "--sources", "clips/demo.mp4", "--headless", "--loop"]
+CMD ["python", "M3/decide_act.py", "--model", "models/best_int8.onnx", "--sources", "clips/demo.mp4", "--headless", "--loop"]
