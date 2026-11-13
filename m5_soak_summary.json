@@ -1,0 +1,14 @@
+{
+ "duration_min": 10.0,
+ "frames": 5849,
+ "errors": 0,
+ "rule_fires": 0,
+ "fps_mean": 9.78,
+ "fps_min_1s": 3.39,
+ "rss_start_mb": 98.4,
+ "rss_end_mb": 146.4,
+ "rss_max_mb": 146.6,
+ "cpu_mean_pct": 73.3,
+ "source": "clips/c.mp4",
+ "model": "models/best_int8.onnx"
+}

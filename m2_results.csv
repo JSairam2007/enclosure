@@ -1,0 +1,4 @@
+model,provider,mAP50,precision,recall,median_ms,p95_ms,fps,size_MB,note
+PyTorch FP32,torch,0.995,0.9896,1.0,,,,6.5,
+ONNX FP32,CPUExecutionProvider,0.995,0.9943,1.0,91.49,97.21,10.9,12.77,
+"ONNX INT8 (static-QDQ, head FP32)",CPUExecutionProvider,0.9904,0.9908,0.9643,70.67,75.11,14.2,6.22,

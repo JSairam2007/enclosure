@@ -1,0 +1,20 @@
+﻿# M1-M3 core
+ultralytics
+opencv-python
+onnx
+onnxruntime
+onnxslim
+numpy
+pandas
+psutil
+pyyaml
+pyserial
+# M4
+scikit-learn
+scipy
+joblib
+paho-mqtt>=2.0
+pymodbus>=3.6
+cryptography
+# M5
+flask

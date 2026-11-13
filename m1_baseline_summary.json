@@ -1,0 +1,9 @@
+{
+ "method": "contour",
+ "frames": 530,
+ "end_to_end_fps": 199.68,
+ "latency_median_ms": 1.81,
+ "latency_p95_ms": 2.87,
+ "cpu_mean_pct": 23.9,
+ "temp_last_c": null
+}

@@ -1,0 +1,44 @@
+﻿# --- data / footage (personal, large) ---
+dataset/
+clips/
+review/
+test_annotated/
+runs/
+runs_v1/
+*.mp4
+*.jpg
+*.png
+m4/data/
+m4/phone_raw/
+
+# --- models / build artefacts ---
+models/
+*.pt
+*.onnx
+*.joblib
+deploy/
+pkgs/
+
+# --- secrets: broker password, TLS keys ---
+m4/mosquitto/certs/
+m4/mosquitto/passwd
+m4/mosquitto/mqtt.env
+m4/mosquitto/mosquitto.conf
+
+# --- runtime state and raw logs ---
+m4/motor_state.json
+m4/.crash_demo_count
+m5/status.json
+*.tmp
+*_log.txt
+*_out.txt
+*_err.txt
+m5_autostart.log
+m5_soak_errors.txt
+m5_soak_console.txt
+m4_mqtt_log.csv
+m4_watchdog_log.csv
+
+# --- python ---
+__pycache__/
+.venv/

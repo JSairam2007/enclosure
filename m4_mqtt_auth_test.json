@@ -1,0 +1,28 @@
+[
+ {
+  "case": "no_password",
+  "expected": "refuse",
+  "got": "refuse",
+  "detail": "broker refused: Not authorized",
+  "pass": true
+ },
+ {
+  "case": "wrong_password",
+  "expected": "refuse",
+  "got": "refuse",
+  "detail": "broker refused: Not authorized",
+  "pass": true
+ },
+ {
+  "case": "valid_credentials",
+  "expected": "accept",
+  "got": "accept",
+  "detail": "connected",
+  "pass": true
+ },
+ {
+  "case": "plaintext_1883_closed",
+  "pass": true,
+  "detail": "connection refused"
+ }
+]
