@@ -1,0 +1,2 @@
+# Dashboard prototype uses only Python standard library.
+# Optional live integration may use Flask, OpenCV and your model runtime.

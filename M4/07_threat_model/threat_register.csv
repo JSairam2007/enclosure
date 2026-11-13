@@ -1,0 +1,6 @@
+level,threat,mitigation_1,mitigation_2,implementation_evidence,status
+Device,Physical access / SD card theft,Lock enclosure,Encrypt sensitive storage,TODO,Proposed
+Network,Packet interception,Use TLS,Isolate OT network / firewall,TODO,Proposed
+Broker,Credential guessing,Unique strong credentials,Rate limiting and audit logs,TODO,Proposed
+Application,Malformed or replayed messages,Validate schema and bounds,Use timestamps / sequence IDs,TODO,Proposed
+Update,Malicious or broken update,Signed artifacts,Rollback to known-good version,TODO,Proposed

@@ -1,5 +1,19 @@
 # M3 - Decide and act
 
+## Task folders (one per assessment column)
+The numbered folders are the group's M3 package (`group_package_README.md`; its own status table is in
+`group_evidence_status.md` - it runs as a dry-run simulation). Real measured evidence for this project is
+listed next to each task.
+
+| # | Task | Group folder | Real evidence in this repo |
+|---|---|---|---|
+| 1 | Decision rule sheet | [01_decision_rule_sheet](01_decision_rule_sheet) | [rules.yaml](rules.yaml), [docs/decision_rules_filled.md](docs/decision_rules_filled.md) |
+| 2 | Two-stream pipeline | [02_two_stream_pipeline](02_two_stream_pipeline) | [decide_act.py](decide_act.py) (2 video streams), [results/m3_fps.csv](results/m3_fps.csv) |
+| 3 | Debounce | [03_debounce](03_debounce) | `Debounce` / `Verdict` in [../common/rules_engine.py](../common/rules_engine.py) |
+| 4 | Actuator fires | [04_actuator_fires](04_actuator_fires) | [arduino_relay.ino](arduino_relay.ino), [results/m3_events.csv](results/m3_events.csv) (24 FIRE/RELEASE, on-screen LED) |
+| 5 | Docker | [05_docker](05_docker) | [../Dockerfile](../Dockerfile) |
+| 6 | End-to-end latency | [06_end_to_end_latency](06_end_to_end_latency) | [results/m3_summary.json](results/m3_summary.json) (median 177 ms, p95 218 ms, 24 events) |
+
 Detections -> decision rule (`rules.yaml`) -> debounce -> actuator (Arduino relay + LED over USB serial, or an
 on-screen LED without `--serial`). Two camera/video streams at once, frame-to-actuator latency logged per event.
 The detector and rule logic live in `../common/` and are shared with M5.

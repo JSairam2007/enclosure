@@ -1,0 +1,8 @@
+# Example Mosquitto configuration — adapt paths and test on your broker.
+listener 8883
+cafile /mosquitto/config/certs/ca.crt
+certfile /mosquitto/config/certs/server.crt
+keyfile /mosquitto/config/certs/server.key
+allow_anonymous false
+password_file /mosquitto/config/passwords
+# Do not commit real certificates, private keys, or password files.

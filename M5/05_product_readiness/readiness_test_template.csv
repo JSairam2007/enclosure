@@ -1,0 +1,5 @@
+test_id,test,procedure,expected,actual,result,evidence
+R01,Auto-start after power-cycle,Power off and restart device,Service starts automatically,TBD,PENDING,TBD
+R02,Offline operation,Disable internet/network,Local inspection continues,TBD,PENDING,TBD
+R03,Persistent logs,Restart service and inspect logs,Previous events remain available,TBD,PENDING,TBD
+R04,Crash recovery,Force-stop process,Service recovers safely,TBD,PENDING,TBD

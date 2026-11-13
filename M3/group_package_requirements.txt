@@ -1,0 +1,4 @@
+# Core M3 simulation package uses Python standard library only.
+# Optional OpenCV integration:
+opencv-python
+numpy

@@ -1,0 +1,13 @@
+{
+  "project": "carton_seal_inspection",
+  "inputs": ["SEALED", "OPEN", "WAITING", "CAMERA_ERROR", "UNKNOWN"],
+  "stable_frames_required": 3,
+  "rules": {
+    "SEALED": {"action": "PASS", "output": "DRY_RUN_PASS"},
+    "OPEN": {"action": "FAIL", "output": "DRY_RUN_REJECT"},
+    "WAITING": {"action": "HOLD", "output": "ALL_OUTPUTS_INACTIVE"},
+    "CAMERA_ERROR": {"action": "FAULT", "output": "FAIL_SAFE"},
+    "UNKNOWN": {"action": "REVIEW", "output": "ALL_OUTPUTS_INACTIVE"}
+  },
+  "note": "Example policy only; validate against the actual machine risk assessment."
+}

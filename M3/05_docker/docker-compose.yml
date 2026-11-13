@@ -1,0 +1,5 @@
+services:
+  carton-m3-demo:
+    build: .
+    container_name: carton-m3-demo
+    restart: "no"

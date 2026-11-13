@@ -8,6 +8,8 @@ runs_v1/
 *.mp4
 *.jpg
 *.png
+!M4/demo_screens/*.png
+!M5/demo_screens/*.png
 M4/data/
 M4/phone_raw/
 

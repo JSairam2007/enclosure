@@ -1,0 +1,8 @@
+document,version,commit_or_link,status
+README.md,v1,TBD,DRAFT
+Camera datasheet,TBD,TBD,TO_ADD
+System architecture diagram,v1,TBD,CONCEPT
+Wiring and safety notes,v1,TBD,TO_ADD
+Dataset and model card,v1,TBD,TO_ADD
+Benchmark report,v1,TBD,PENDING_MEASUREMENT
+Demo video,v1,TBD,PENDING_RECORDING
